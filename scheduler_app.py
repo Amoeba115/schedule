@@ -6,7 +6,7 @@ from scheduler_logic import create_schedule, parse_time_input # Assuming your lo
 
 # \--- Page Configuration (Optional but good practice) ---
 
-st.set\_page\_config(page\_title="Employee Scheduler", layout="wide")
+st.set\page\_config(page\_title="Employee Scheduler", layout="wide")
 
 st.title("Employee Schedule Generator")
 st.write("Fill in the details below to generate the schedule.")
