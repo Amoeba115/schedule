@@ -37,8 +37,8 @@ for i in range(num_employees):
     tofftl_start_str = None
     tofftl_end_str = None
     if has_tofftl:
-        tofftl_start_str = st.sidebar.text_input(f"ToffTL Start (Employee {i+1})", "10:00 AM", key=f"tofftl_s_{i}")
-        tofftl_end_str = st.sidebar.text_input(f"ToffTL End (Employee {i+1})", "10:30 AM", key=f"tofftl_e_{i}")
+        tofftl_start_str = st.sidebar.text_input(f"ToffTL Start (Employee {i+1})", " ", key=f"tofftl_s_{i}")
+        tofftl_end_str = st.sidebar.text_input(f"ToffTL End (Employee {i+1})", " ", key=f"tofftl_e_{i}")
 
     if emp_name: # Only add if name is provided
         employee_data_list.append({
