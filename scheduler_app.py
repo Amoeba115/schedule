@@ -18,8 +18,8 @@ st.sidebar.header("Configuration")
 
 # Store Hours
 st.sidebar.subheader("Store Hours")
-store_open_time_str = st.sidebar.text_input("Store Open Time (e.g., 08:00 AM)", "08:00 AM")
-store_close_time_str = st.sidebar.text_input("Store Close Time (e.g., 11:00 PM)", "11:00 PM")
+store_open_time_str = st.sidebar.text_input("Store Open Time (e.g., 08:00 AM)", " ")
+store_close_time_str = st.sidebar.text_input("Store Close Time (e.g., 11:00 PM)", " ")
 
 # Number of Employees
 st.sidebar.subheader("Employees")
