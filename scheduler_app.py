@@ -29,9 +29,9 @@ employee_data_list = []
 for i in range(num_employees):
     st.sidebar.markdown(f"--- **Employee {i+1}** ---")
     emp_name = st.sidebar.text_input(f"Name (Employee {i+1})", key=f"name_{i}")
-    shift_start_str = st.sidebar.text_input(f"Shift Start (Employee {i+1}, e.g., 09:00 AM)", "09:00 AM", key=f"s_start_{i}")
-    shift_end_str = st.sidebar.text_input(f"Shift End (Employee {i+1}, e.g., 05:00 PM)", "05:00 PM", key=f"s_end_{i}")
-    break_start_str = st.sidebar.text_input(f"Break Start (Employee {i+1}, e.g., 01:00 PM, for 30 min)", "01:00 PM", key=f"break_{i}")
+    shift_start_str = st.sidebar.text_input(f"Shift Start (Employee {i+1}, e.g., 09:00 AM)", " ", key=f"s_start_{i}")
+    shift_end_str = st.sidebar.text_input(f"Shift End (Employee {i+1}, e.g., 05:00 PM)", " ", key=f"s_end_{i}")
+    break_start_str = st.sidebar.text_input(f"Break Start (Employee {i+1}, e.g., 01:00 PM)", " ", key=f"break_{i}")
     
     has_tofftl = st.sidebar.checkbox(f"Training Off The Line (ToffTL) for Employee {i+1}?", key=f"has_tofftl_{i}")
     tofftl_start_str = None
