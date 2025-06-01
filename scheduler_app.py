@@ -86,3 +86,59 @@ tofftl\_e\_current = st.session\_state.get(f"tofftl\_e\_{i}", None) if has\_toff
             "ToffTL Start": tofftl_s_current, "ToffTL End": tofftl_e_current,
             "has_tofftl_flag_for_validation": has_tofftl_current # For validation step
         })
+if num_employees_input is None or num_employees_input &lt; 1:
+st.error("Please enter a valid number of employees (at least 1).")
+elif not employee_data_list_for_generation and num_employees_input > 0:
+st.error(f"Please enter details for the {num_employees_input} employee(s). Ensure names are filled for all.")
+else:
+store_open_dt = parse_time_input(store_open_time_str, REF_DATE_FOR_PARSING)
+store_close_dt = parse_time_input(store_close_time_str, REF_DATE_FOR_PARSING)
+
+if pd.isna(store_open_dt) or pd.isna(store_close_dt):
+    st.error("Invalid or missing store open/close time. Please use HH:MM AM/PM or HH:MM format.")
+else:
+    store_open_time_obj = store_open_dt.time()
+    store_close_time_obj = store_close_dt.time()
+    
+    valid_employee_data = True
+    final_employee_list_for_processing = [] # List after validation
+    for emp_idx, emp_d in enumerate(employee_data_list_for_generation):
+        if not emp_d["Name"].strip(): # Should have been caught, but good to re-check
+            st.error(f"Employee {emp_idx+1} name is missing.")
+            valid_employee_data = False; break
+        if not emp_d["Shift Start"].strip() or not emp_d["Shift End"].strip() or not emp_d["Break"].strip():
+            st.error(f"Shift Start, Shift End, and Break Start are required for {emp_d['Name']}.")
+            valid_employee_data = False; break
+        if emp_d.get("has_tofftl_flag_for_validation", False) and \
+           (not emp_d.get("ToffTL Start", "").strip() or not emp_d.get("ToffTL End", "").strip()):
+            st.error(f"ToffTL Start and End times are required for {emp_d['Name']} since ToffTL was checked.")
+            valid_employee_data = False; break
+        
+        # Remove the temporary validation flag before passing to scheduler_logic
+        emp_d_cleaned = emp_d.copy()
+        emp_d_cleaned.pop("has_tofftl_flag_for_validation", None)
+        final_employee_list_for_processing.append(emp_d_cleaned)
+
+    if valid_employee_data and final_employee_list_for_processing:
+        st.info("Generating schedule... Please wait.")
+        try:
+            schedule_csv_string = create_schedule(store_open_time_obj, store_close_time_obj, final_employee_list_for_processing)
+            st.success("Schedule Generated Successfully!")
+            st.subheader("Generated Schedule (CSV Format)")
+            st.text_area("CSV Output", schedule_csv_string, height=400)
+            st.download_button(
+                label="Download Schedule as CSV",
+                data=schedule_csv_string,
+                file_name="schedule.csv", # Changed filename
+                mime="text/csv",
+            )
+        except Exception as e:
+            st.error(f"An error occurred during schedule generation: {e}")
+            # import traceback # Uncomment for detailed local debugging
+            # st.text(traceback.format_exc()) # Uncomment for detailed local debugging
+    elif valid_employee_data and not final_employee_list_for_processing: # All names were blank
+         st.error("No employee data was collected. Please ensure names are filled for each employee.")
+    # else: errors already shown by validation loop
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("Ensure all time inputs are in a recognizable format (e.g., '9:00 AM', '14:30'). Break is 30 minutes from start time.")
