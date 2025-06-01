@@ -8,7 +8,7 @@ from scheduler_logic import create_schedule, parse_time_input # Assuming your lo
 st.set_page_config(page_title="Employee Scheduler", layout="wide")
 
 st.title("Employee Schedule Generator")
-st.write("Fill in the details below to generate the schedule.")
+st.write("Fill in the details to generate the schedule.")
 
 # --- Consistent Reference Date for Time Parsing ---
 REF_DATE_FOR_PARSING = datetime(1970, 1, 1).date()
