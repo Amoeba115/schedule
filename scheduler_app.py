@@ -8,7 +8,7 @@ from scheduler_logic import create_schedule, parse_time_input # Assuming your lo
 st.set_page_config(page_title="Employee Scheduler", layout="wide")
 
 st.title("Employee Schedule Generator")
-st.write("Fill in the details below to generate the schedule.")
+st.write("Fill in the details to generate the schedule.")
 
 # --- Consistent Reference Date for Time Parsing ---
 REF_DATE_FOR_PARSING = datetime(1970, 1, 1).date()
@@ -31,7 +31,7 @@ for i in range(num_employees):
     emp_name = st.sidebar.text_input(f"Name (Employee {i+1})", key=f"name_{i}")
     shift_start_str = st.sidebar.text_input(f"Shift Start (Employee {i+1}, e.g., 09:00 AM)", "", key=f"s_start_{i}")
     shift_end_str = st.sidebar.text_input(f"Shift End (Employee {i+1}, e.g., 05:00 PM)", "", key=f"s_end_{i}")
-    break_start_str = st.sidebar.text_input(f"Break Start (Employee {i+1}, e.g., 01:00 PM, for 30 min)", "", key=f"break_{i}")
+    break_start_str = st.sidebar.text_input(f"Break Start (Employee {i+1}, e.g., 01:00 PM)", "", key=f"break_{i}")
     
     has_tofftl = st.sidebar.checkbox(f"Training Off The Line (ToffTL) for Employee {i+1}?", key=f"has_tofftl_{i}")
     tofftl_start_str = None
